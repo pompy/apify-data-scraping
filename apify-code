@@ -1,0 +1,118 @@
+function pageFunction(context) {
+    // called on every page the crawler visits, use it to extract data from it
+    var $ = context.jQuery;
+    var i = 0;
+    var j=0;
+    var results = [];
+    
+        var name='';
+        var company='';
+        var licenseno='';
+        var licensetype='';
+        var address='';
+        var status='';
+        var expiry='';
+        var data='';
+        var cellexist=0;
+        
+   if (context.request.label === "DETAIL") { 
+        context.skipLinks();
+       console.log("test");
+        i=0;
+        j=0;
+        k=0;
+       cellexist=0;
+       addressexist=0;
+        
+        $("tr").each(function() {
+            console.log("ghusa");
+              $(this).find('td.dataView').each(function () {
+                  if(i==0 && j==1) {
+                  name=$(this).text().trim();
+                  }
+                  
+                  if(i==0 && j==2) {
+                  licensetype=$(this).text().trim();
+                  }
+                  
+                    if(i==0 && j==3) {
+                  licenseno=$(this).text().trim();
+                  }
+                   if(i==0 && j==4) {
+                  status=$(this).text().trim();
+                  }
+                  
+                   if(i==0 && j==5) {
+                  expiry=$(this).text().trim();
+                  }
+                  
+                  i++;
+        });
+        
+    
+        $(this).find('td.itemCell').each(function () {
+                  cellexist=1;
+                  console.log('finder ' + k + ' ' + j + ' ' + $(this).text().replace(/\s/g,''));
+                  if(k<=1 && j==7) {
+                  address= address + ' ' + $(this).text().replace(/\s{2,}/g,' ');
+                  
+                  }
+             
+                  
+                  k++;
+        });
+        
+        
+        i=0;
+        k=0;
+        j++;
+      
+        if(cellexist==1  && name.length>0 ) {
+          
+            $("div.item").each(function() { 
+            
+             company=company + ' ' + $(this).text().replace(/\s{2,}/g,' ');
+         });
+         
+          $(".tableWithLine").each(function() { 
+            
+             data=data + ' ' + $(this).text().replace(/\s{2,}/g,' ') + "\n\n";
+         });
+         
+         
+   results.push( {
+         name: name,
+         company: company,
+         licensetype: licensetype,
+         licenseno: licenseno,
+         address: address,
+         expiry: expiry,
+         status: status,
+         data:data
+        });
+        
+        company="";
+        licenseno="";
+        address="";
+        licensetype="";
+        expiry="";
+        status="";
+        name="";
+        data="";
+            cellexist=0;
+            addressexist=0;
+            
+        }
+          
+        
+});
+            
+    return results;
+} else {
+   
+      console.log("test1");
+    context.skipOutput();
+}
+
+         
+}
