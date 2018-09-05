@@ -1,5 +1,6 @@
 # apify-data-scraping
-Apify Scraping for new york state gov. This extracts real estate broker data (broker details like name, company, license no, address etc) 
+Apify Scraping for new york state gov. This extracts real estate broker data (broker details like name, company, license no, address etc)
+This crawls through all the detail pages and handles paging 
 
 * Json you can import to apify it will set all the parameters. 
 * Please install EditThisCookie plugin for google chrome 
