@@ -1,0 +1,127 @@
+{
+  "_id": "KeBKu3HPbPPGxhRJj",
+  "clickableElementsSelector": "a[href^=\"list.do?\"]   , a[href^=\"details.do?anchor=\"]",
+  "pageFunction": "function pageFunction(context) {\n    // called on every page the crawler visits, use it to extract data from it\n    var $ = context.jQuery;\n    var i = 0;\n    var j=0;\n    var results = [];\n    \n        var name='';\n        var company='';\n        var licenseno='';\n        var licensetype='';\n        var address='';\n        var status='';\n        var expiry='';\n        var data='';\n        var cellexist=0;\n        \n   if (context.request.label === \"DETAIL\") { \n        context.skipLinks();\n       console.log(\"test\");\n        i=0;\n        j=0;\n        k=0;\n       cellexist=0;\n       addressexist=0;\n        \n        $(\"tr\").each(function() {\n            console.log(\"ghusa\");\n              $(this).find('td.dataView').each(function () {\n                  if(i==0 && j==1) {\n                  name=$(this).text().trim();\n                  }\n                  \n                  if(i==0 && j==2) {\n                  licensetype=$(this).text().trim();\n                  }\n                  \n                    if(i==0 && j==3) {\n                  licenseno=$(this).text().trim();\n                  }\n                   if(i==0 && j==4) {\n                  status=$(this).text().trim();\n                  }\n                  \n                   if(i==0 && j==5) {\n                  expiry=$(this).text().trim();\n                  }\n                  \n                  i++;\n        });\n        \n    \n        $(this).find('td.itemCell').each(function () {\n                  cellexist=1;\n                  console.log('finder ' + k + ' ' + j + ' ' + $(this).text().replace(/\\s/g,''));\n                  if(k<=1 && j==7) {\n                  address= address + ' ' + $(this).text().replace(/\\s{2,}/g,' ');\n                  \n                  }\n             \n                  \n                  k++;\n        });\n        \n        \n        i=0;\n        k=0;\n        j++;\n      \n        if(cellexist==1  && name.length>0 ) {\n          \n            $(\"div.item\").each(function() { \n            \n             company=company + ' ' + $(this).text().replace(/\\s{2,}/g,' ');\n         });\n         \n          $(\".tableWithLine\").each(function() { \n            \n             data=data + ' ' + $(this).text().replace(/\\s{2,}/g,' ') + \"\\n\\n\";\n         });\n         \n         \n   results.push( {\n         name: name,\n         company: company,\n         licensetype: licensetype,\n         licenseno: licenseno,\n         address: address,\n         expiry: expiry,\n         status: status,\n         data:data\n        });\n        \n        company=\"\";\n        licenseno=\"\";\n        address=\"\";\n        licensetype=\"\";\n        expiry=\"\";\n        status=\"\";\n        name=\"\";\n        data=\"\";\n            cellexist=0;\n            addressexist=0;\n            \n        }\n          \n        \n});\n            \n    return results;\n} else {\n   \n      console.log(\"test1\");\n    context.skipOutput();\n}\n\n         \n}",
+  "interceptRequest": "function interceptRequest(context, newRequest) {\n    // called whenever the crawler finds a link to a new page,\n    // use it to override default behavior\n    return newRequest;\n}",
+  "loadImages": true,
+  "loadCss": true,
+  "injectJQuery": true,
+  "ignoreRobotsTxt": false,
+  "cookiesPersistence": "PER_PROCESS",
+  "proxyType": "NONE",
+  "ownerUserId": "j36z6wP9GRwsLxrcW",
+  "customId": "new york gov real estate broker scrapper",
+  "comments": null,
+  "startUrls": [
+    {
+      "key": "",
+      "value": "https://appext20.dos.ny.gov/nydos/list.do?anchor=5d10ee.0#nbb"
+    }
+  ],
+  "crawlPurls": [
+    {
+      "key": "DETAIL",
+      "value": "https://appext20.dos.ny.gov/nydos/details.do?anchor=[.*]"
+    },
+    {
+      "key": "",
+      "value": "https://appext20.dos.ny.gov/nydos/list.do?anchor=[.*]"
+    }
+  ],
+  "considerUrlFragment": false,
+  "injectUnderscoreJs": false,
+  "skipLoadingFrames": true,
+  "verboseLog": false,
+  "disableWebSecurity": false,
+  "maxCrawledPages": 3000,
+  "maxOutputPages": null,
+  "maxCrawlDepth": null,
+  "timeout": null,
+  "resourceTimeout": null,
+  "pageLoadTimeout": null,
+  "pageFunctionTimeout": null,
+  "maxInfiniteScrollHeight": null,
+  "randomWaitBetweenRequests": null,
+  "maxCrawledPagesPerSlave": null,
+  "maxParallelRequests": 1,
+  "cookies": [
+    {
+      "domain": ".ny.gov",
+      "expirationDate": 1566908973.316905,
+      "hostOnly": false,
+      "httpOnly": true,
+      "name": "__cfduid",
+      "path": "/",
+      "sameSite": "no_restriction",
+      "secure": false,
+      "session": false,
+      "storeId": "0",
+      "value": "d152ac5422905cfbb69fb225de4b2d8241535372924",
+      "id": 1
+    },
+    {
+      "domain": ".ny.gov",
+      "expirationDate": 1598444972,
+      "hostOnly": false,
+      "httpOnly": false,
+      "name": "_ga",
+      "path": "/",
+      "sameSite": "no_restriction",
+      "secure": false,
+      "session": false,
+      "storeId": "0",
+      "value": "GA1.2.1679499553.1535372973",
+      "id": 2
+    },
+    {
+      "domain": ".ny.gov",
+      "expirationDate": 1535459372,
+      "hostOnly": false,
+      "httpOnly": false,
+      "name": "_gid",
+      "path": "/",
+      "sameSite": "no_restriction",
+      "secure": false,
+      "session": false,
+      "storeId": "0",
+      "value": "GA1.2.1202608499.1535372973",
+      "id": 3
+    },
+    {
+      "domain": "appext20.dos.ny.gov",
+      "hostOnly": true,
+      "httpOnly": false,
+      "name": "JSESSIONID",
+      "path": "/nydos",
+      "sameSite": "no_restriction",
+      "secure": false,
+      "session": true,
+      "storeId": "0",
+      "value": "FXDLf33gDYomueVjKHfOXXzHlhk8apDLM3Ok7FVm.dos017pw5web",
+      "id": 4
+    }
+  ],
+  "customHttpHeaders": null,
+  "proxyGroups": [],
+  "customProxies": null,
+  "customData": null,
+  "finishWebhookUrl": null,
+  "finishWebhookData": null,
+  "rotateUserAgents": false,
+  "createdAt": "2018-08-25T11:37:07.619Z",
+  "modifiedAt": "2018-09-05T22:21:52.857Z",
+  "executeUrl": "https://api.apify.com/v1/j36z6wP9GRwsLxrcW/crawlers/KeBKu3HPbPPGxhRJj/execute?token=LwS6ZpG94e8GmcNBNyXvE9ddL",
+  "lastExecution": {
+    "_id": "TKhZhr84bsKCDrKiN",
+    "startedAt": "2018-08-28T11:49:33.653Z",
+    "finishedAt": "2018-08-28T12:21:46.281Z",
+    "status": "SUCCEEDED",
+    "pagesCrawled": 1190,
+    "detailsUrl": "https://api.apify.com/v1/execs/TKhZhr84bsKCDrKiN",
+    "resultsUrl": "https://api.apify.com/v1/execs/TKhZhr84bsKCDrKiN/results"
+  },
+  "settingsUrl": "https://api.apify.com/v1/j36z6wP9GRwsLxrcW/crawlers/KeBKu3HPbPPGxhRJj?token=8cLQbpHcJ6XvbKg9BrHfjuAQs",
+  "executionsListUrl": "https://api.apify.com/v1/j36z6wP9GRwsLxrcW/crawlers/KeBKu3HPbPPGxhRJj/execs?token=4zSRcmEw4kvF5YfhP2rsJARWi",
+  "lastExecutionFixedDetailsUrl": "https://api.apify.com/v1/j36z6wP9GRwsLxrcW/crawlers/KeBKu3HPbPPGxhRJj/lastExec?token=4zSRcmEw4kvF5YfhP2rsJARWi",
+  "lastExecutionFixedResultsUrl": "https://api.apify.com/v1/j36z6wP9GRwsLxrcW/crawlers/KeBKu3HPbPPGxhRJj/lastExec/results?token=4zSRcmEw4kvF5YfhP2rsJARWi"
+}
